@@ -1,0 +1,68 @@
+AllCops:
+  TargetRubyVersion: 2.3
+
+##################### Linting #############################
+
+##################### Metrics #############################
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/BlockLength:
+  ExcludedMethods:
+    - describe
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+##################### Performance #############################
+
+Performance/FlatMap:
+  EnabledForFlattenWithoutParams: false
+
+Performance/RedundantBlockCall:
+  Enabled: false
+
+##################### Rails ##################################
+
+Rails/SafeNavigation:
+  ConvertTry: true
+
+Rails/SaveBang:
+  Enabled: true
+
+##################### Security ##################################
+
+##################### Style #################################
+
+Style/AutoResourceCleanup:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/Encoding:
+  Enabled: true
+  EnforcedStyle: never
+
+Style/GuardClause:
+  MinBodyLength: 5
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/MultilineMethodCallIndentation:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+##################### Bundler #################################
+Bundler/OrderedGems:
+  Enabled: false
