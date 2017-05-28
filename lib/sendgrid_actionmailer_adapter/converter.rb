@@ -14,12 +14,12 @@ module SendGridActionMailerAdapter
     ].freeze
 
     CONVERTERS = {
-      from: lambda { |mail|
+      from: ->(mail) {
         addr = mail[:from].addrs.first
         ::SendGrid::Email.new(email: addr.address, name: addr.display_name)
       },
       subject: ->(mail) { mail.subject },
-      personalizations: lambda { |mail|
+      personalizations: ->(mail) {
         # Separate emails per each To address.
         # Cc and Bcc addresses are shared with each emails.
         mail[:to].addrs.map do |to_addr|
@@ -34,10 +34,10 @@ module SendGridActionMailerAdapter
           end
         end
       },
-      contents: lambda { |mail|
+      contents: ->(mail) {
         ::SendGrid::Content.new(type: mail.mime_type, value: mail.body.to_s)
       },
-      attachments: lambda { |mail|
+      attachments: ->(mail) {
         mail.attachments.map do |attachment|
           ::SendGrid::Attachment.new.tap do |sendgrid_attachment|
             sendgrid_attachment.type = attachment.mime_type
@@ -49,14 +49,14 @@ module SendGridActionMailerAdapter
           end
         end
       },
-      categories: lambda { |mail|
+      categories: ->(mail) {
         return nil if mail['categories'].nil?
         # FIXME: Separator ', ' is dependant on Mail::UnstructuredField implementation,
         # this may occur unexpected behaviour on 'mail' gem update.
         mail['categories'].value.split(', ').map { |c| ::SendGrid::Category.new(name: c) }
       },
       send_at: ->(mail) { mail['send_at'].value.to_i if mail['send_at'] },
-      reply_to: lambda { |mail|
+      reply_to: ->(mail) {
         addr = mail[:reply_to]&.addrs&.first
         ::SendGrid::Email.new(email: addr.address, name: addr.display_name) if addr
       }
