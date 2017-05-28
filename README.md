@@ -1,6 +1,9 @@
 # SendgridActionMailerAdapter
 
 [![Build Status](https://travis-ci.org/ryu39/sendgrid_actionmailer_adapter.svg?branch=master)](https://travis-ci.org/ryu39/sendgrid_actionmailer_adapter)
+[![Code Climate](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter/badges/gpa.svg)](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter)
+[![Test Coverage](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter/badges/coverage.svg)](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter/coverage)
+[![Issue Count](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter/badges/issue_count.svg)](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter)
 
 A ActionMailer adapter using [SendGrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html).
 
