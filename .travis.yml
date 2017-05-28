@@ -1,7 +1,7 @@
 language: ruby
 
 rvm:
-  - head
+  - ruby-head
   - 2.4.1
   - 2.3.4
 
@@ -15,3 +15,7 @@ after_success:
   - 'bundle exec codeclimate-test-reporter'
 
 cache: bundler
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
