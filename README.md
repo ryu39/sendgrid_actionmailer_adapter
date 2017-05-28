@@ -1,5 +1,6 @@
 # SendgridActionMailerAdapter
 
+[![Gem Version](https://badge.fury.io/rb/sendgrid_actionmailer_adapter.svg)](https://badge.fury.io/rb/sendgrid_actionmailer_adapter)
 [![Build Status](https://travis-ci.org/ryu39/sendgrid_actionmailer_adapter.svg?branch=master)](https://travis-ci.org/ryu39/sendgrid_actionmailer_adapter)
 [![Code Climate](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter/badges/gpa.svg)](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter)
 [![Test Coverage](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter/badges/coverage.svg)](https://codeclimate.com/github/ryu39/sendgrid_actionmailer_adapter/coverage)
