@@ -1,5 +1,7 @@
 # SendgridActionMailerAdapter
 
+[![Build Status](https://travis-ci.org/ryu39/sendgrid_actionmailer_adapter.svg?branch=master)](https://travis-ci.org/ryu39/sendgrid_actionmailer_adapter)
+
 A ActionMailer adapter using [SendGrid Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html).
 
 ## Requirements
