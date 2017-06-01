@@ -7,6 +7,6 @@ require 'rubocop/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 RuboCop::RakeTask.new(:rubocop)
 
-task default: %i[rubocop spec]
+task default: %i(rubocop spec)
 
 gem 'sendgrid_actionmailer_adapter'

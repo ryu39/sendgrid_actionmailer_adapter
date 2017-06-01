@@ -36,13 +36,13 @@ RSpec.describe SendGridActionMailerAdapter::Configuration do
           api_key: api_key,
           host: host,
           request_headers: request_headers,
-          version: version
+          version: version,
         },
         retry: {
           max_count: retry_max_count,
-          wait_seconds: retry_wait_seconds
+          wait_seconds: retry_wait_seconds,
         },
-        return_response: return_response
+        return_response: return_response,
       }
     end
 

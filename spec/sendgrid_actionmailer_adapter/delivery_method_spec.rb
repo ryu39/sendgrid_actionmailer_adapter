@@ -26,9 +26,9 @@ RSpec.describe SendGridActionMailerAdapter::DeliveryMethod do
       end
     end
     let(:from) { 'from@example.com' }
-    let(:to_addrs) { %w[to_1@example.com to_2@example.com] }
-    let(:cc_addrs) { %w[cc_1@example.com cc_2@example.com] }
-    let(:bcc_addrs) { %w[bcc_1@example.com bcc_2@example.com] }
+    let(:to_addrs) { %w(to_1@example.com to_2@example.com) }
+    let(:cc_addrs) { %w(cc_1@example.com cc_2@example.com) }
+    let(:bcc_addrs) { %w(bcc_1@example.com bcc_2@example.com) }
     let(:title) { 'Title' }
     let(:content_type) { 'text/plain; charset=UTF-8' }
     let(:body) { 'Body' }
@@ -45,7 +45,7 @@ RSpec.describe SendGridActionMailerAdapter::DeliveryMethod do
     shared_examples_for 'retryable' do
       let(:settings) do
         {
-          retry: { max_count: 1, wait_seconds: 0 }
+          retry: { max_count: 1, wait_seconds: 0 },
         }
       end
 

@@ -18,7 +18,7 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
     end
   end
   let(:from) { 'from@example.com' }
-  let(:to) { %w[to_1@example.com to_2@example.com] }
+  let(:to) { %w(to_1@example.com to_2@example.com) }
   let(:title) { 'Title' }
   let(:content_type) { 'text/plain; charset=UTF-8' }
   let(:body) { 'Body' }
@@ -101,8 +101,8 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
 
     context 'when To addresses contain display names' do
       let(:to) { addrs.zip(names).map { |addr, name| "#{name} <#{addr}>" } }
-      let(:addrs) { %w[to_1@example.com to_2@example.com] }
-      let(:names) { %w[To1 To2] }
+      let(:addrs) { %w(to_1@example.com to_2@example.com) }
+      let(:names) { %w(To1 To2) }
 
       it 'sets To addresses and names to personaliations separately' do
         subject.personalizations.each.with_index do |p, i|
@@ -113,7 +113,7 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
     end
 
     context 'when mail contains cc addresses' do
-      let(:cc) { %w[cc_1@example.com cc_2@example.com] }
+      let(:cc) { %w(cc_1@example.com cc_2@example.com) }
 
       before do
         mail.cc = cc
@@ -127,8 +127,8 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
 
       context 'when cc addresses contains display names' do
         let(:cc) { addrs.zip(names).map { |addr, name| "#{name} <#{addr}>" } }
-        let(:addrs) { %w[cc_1@example.com cc_2@example.com] }
-        let(:names) { %w[Cc1 Cc2] }
+        let(:addrs) { %w(cc_1@example.com cc_2@example.com) }
+        let(:names) { %w(Cc1 Cc2) }
 
         it 'sets Cc addresses and names to personaliations' do
           subject.personalizations.each do |p|
@@ -140,7 +140,7 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
     end
 
     context 'when mail contains bcc addresses' do
-      let(:bcc) { %w[bcc_1@example.com bcc_2@example.com] }
+      let(:bcc) { %w(bcc_1@example.com bcc_2@example.com) }
 
       before do
         mail.bcc = bcc
@@ -155,8 +155,8 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
 
       context 'when bcc addresses contains display names' do
         let(:bcc) { addrs.zip(names).map { |addr, name| "#{name} <#{addr}>" } }
-        let(:addrs) { %w[bcc_1@example.com bcc_2@example.com] }
-        let(:names) { %w[Bcc1 Bcc2] }
+        let(:addrs) { %w(bcc_1@example.com bcc_2@example.com) }
+        let(:names) { %w(Bcc1 Bcc2) }
 
         it 'sets Bcc addresses and names to personaliations' do
           subject.personalizations.each do |p|
@@ -168,7 +168,7 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
     end
 
     context 'when mail headers contain categories' do
-      let(:categories) { %w[sales marketing] }
+      let(:categories) { %w(sales marketing) }
 
       before do
         mail['categories'] = categories

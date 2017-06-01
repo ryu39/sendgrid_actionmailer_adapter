@@ -10,7 +10,7 @@ module SendGridActionMailerAdapter
     VALIDATORS = [
       ->(mail) { "'from' is required." if mail.from_addrs.empty? },
       ->(mail) { "'to_addrs' must not be empty." if mail.to_addrs.empty? },
-      ->(mail) { "'subject' is required." if mail.subject.nil? || mail.subject.empty? }
+      ->(mail) { "'subject' is required." if mail.subject.nil? || mail.subject.empty? },
     ].freeze
 
     CONVERTERS = {
@@ -59,7 +59,7 @@ module SendGridActionMailerAdapter
       reply_to: ->(mail) {
         addr = mail[:reply_to]&.addrs&.first
         ::SendGrid::Email.new(email: addr.address, name: addr.display_name) if addr
-      }
+      },
     }.freeze
 
     class << self
