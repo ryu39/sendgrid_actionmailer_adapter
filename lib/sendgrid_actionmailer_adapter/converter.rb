@@ -51,7 +51,7 @@ module SendGridActionMailerAdapter
       },
       categories: ->(mail) {
         return nil if mail['categories'].nil?
-        # FIXME: Separator ', ' is dependant on Mail::UnstructuredField implementation,
+        # TODO: Separator ', ' is dependant on Mail::UnstructuredField implementation,
         # this may occur unexpected behaviour on 'mail' gem update.
         mail['categories'].value.split(', ').map { |c| ::SendGrid::Category.new(name: c) }
       },
