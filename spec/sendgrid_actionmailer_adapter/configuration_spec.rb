@@ -9,6 +9,7 @@ RSpec.describe SendGridActionMailerAdapter::Configuration do
   let(:version) { 'v3' }
   let(:retry_max_count) { 1 }
   let(:retry_wait_seconds) { 0.5 }
+  let(:return_response) { true }
 
   before do
     SendGridActionMailerAdapter.configure do |config|
@@ -18,6 +19,7 @@ RSpec.describe SendGridActionMailerAdapter::Configuration do
       config.version = version
       config.retry_max_count = retry_max_count
       config.retry_wait_seconds = retry_wait_seconds
+      config.return_response = return_response
     end
   end
 
@@ -39,7 +41,8 @@ RSpec.describe SendGridActionMailerAdapter::Configuration do
         retry: {
           max_count: retry_max_count,
           wait_seconds: retry_wait_seconds
-        }
+        },
+        return_response: return_response
       }
     end
 
