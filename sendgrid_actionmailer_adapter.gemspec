@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock'
   spec.add_development_dependency 'rubocop', '~> 0.48.1'
   spec.add_development_dependency 'mail'
+  spec.add_development_dependency 'actionmailer'
 end
