@@ -41,7 +41,7 @@ module SendGridActionMailerAdapter
         mail.attachments.map do |attachment|
           ::SendGrid::Attachment.new.tap do |sendgrid_attachment|
             sendgrid_attachment.type = attachment.mime_type
-            sendgrid_attachment.content = ::Base64.encode64(attachment.body.raw_source)
+            sendgrid_attachment.content = ::Base64.strict_encode64(attachment.body.raw_source)
             sendgrid_attachment.filename = ::Mail::Encodings.decode_encode(
               attachment.content_type_parameters['filename'], :decode
             )

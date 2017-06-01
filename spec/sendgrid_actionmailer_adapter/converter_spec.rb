@@ -230,7 +230,7 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
 
       it 'sets Base64 encoded content to SendGrid::Mail#attachments' do
         attachment = subject.attachments.first
-        expect(attachment['content']).to eq(::Base64.encode64(attachment_content))
+        expect(attachment['content']).to eq(::Base64.strict_encode64(attachment_content))
       end
     end
   end
