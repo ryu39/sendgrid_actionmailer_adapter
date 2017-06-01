@@ -24,7 +24,7 @@ RSpec.describe 'Integration test, send mails using ActionMailer' do
     {
       to: ENV['TEST_MAIL_ADDRESS_TO'],
       subject: 'test mail',
-      body: 'This is a test mail'
+      body: 'This is a test mail',
     }
   end
   let(:params) { {} }
@@ -53,7 +53,7 @@ RSpec.describe 'Integration test, send mails using ActionMailer' do
     let(:params) do
       {
         subject: 'test mail with cc',
-        cc: ENV['TEST_MAIL_ADDRESS_CC']
+        cc: ENV['TEST_MAIL_ADDRESS_CC'],
       }
     end
 
@@ -64,7 +64,7 @@ RSpec.describe 'Integration test, send mails using ActionMailer' do
     let(:params) do
       {
         subject: 'test mail with bcc',
-        bcc: ENV['TEST_MAIL_ADDRESS_BCC']
+        bcc: ENV['TEST_MAIL_ADDRESS_BCC'],
       }
     end
 
@@ -88,7 +88,7 @@ RSpec.describe 'Integration test, send mails using ActionMailer' do
     let(:params) do
       {
         subject: 'test mail with categories',
-        categories: %w[Test1 Test2]
+        categories: %w(Test1 Test2),
       }
     end
 
@@ -99,7 +99,7 @@ RSpec.describe 'Integration test, send mails using ActionMailer' do
     let(:params) do
       {
         subject: 'test mail with send_at',
-        send_at: Time.now.to_i
+        send_at: Time.now.to_i,
       }
     end
 

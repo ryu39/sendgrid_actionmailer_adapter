@@ -23,13 +23,13 @@ module SendGridActionMailerAdapter
             api_key: api_key || '',
             host: host,
             request_headers: request_headers,
-            version: version
+            version: version,
           },
           retry: {
             max_count: retry_max_count || DEFAULT_RETRY_MAX_COUNT,
-            wait_seconds: retry_wait_seconds || DEFAULT_RETRY_WAIT_SECONDS
+            wait_seconds: retry_wait_seconds || DEFAULT_RETRY_WAIT_SECONDS,
           },
-          return_response: return_response
+          return_response: return_response,
         }.freeze
       end
 
