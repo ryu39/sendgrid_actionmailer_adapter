@@ -5,6 +5,7 @@ require 'sendgrid_actionmailer_adapter'
 
 require 'action_mailer'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe 'Integration test, send mails using ActionMailer' do
   subject { mail.deliver_now! }
 

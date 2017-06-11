@@ -1,181 +1,19 @@
+require: 'rubocop-rspec'
+
+inherit_gem:
+  ryu39cop:
+    - 'config/rubocop.yml'
+    - 'config/rspec.yml'
+
 AllCops:
   TargetRubyVersion: 2.3
+
+RSpec/DescribeClass:
   Exclude:
-    - 'bin/*'
-  DisplayCopNames: true
+    - 'integration_test/**/*_spec.rb'
 
-Lint/AmbiguousBlockAssociation:
+RSpec/FilePath:
+  Enabled: false
   Exclude:
-    - 'spec/**/*.rb'
+    - 'spec/**/*_spec.rb'
 
-Lint/AssignmentInCondition:
-  AllowSafeAssignment: false
-
-Lint/EmptyWhen:
-  Enabled: false
-
-Lint/InheritException:
-  EnforcedStyle: standard_error
-
-Lint/UnusedMethodArgument:
-  AllowUnusedKeywordArguments: true
-
-Metrics/AbcSize:
-  Max: 20
-
-Metrics/BlockLength:
-  Exclude:
-    - 'Rakefile'
-    - 'spec/**/*.rb'
-    - 'integration_test/**/*.rb'
-    - 'Gemfile'
-    - '*.gemspec'
-
-Metrics/LineLength:
-  Max: 100
-
-Metrics/MethodLength:
-  Max: 30
-
-Metrics/ParameterLists:
-  CountKeywordArgs: false
-
-Metrics/PerceivedComplexity:
-  Max: 8
-
-Style/Alias:
-  EnforcedStyle: prefer_alias_method
-
-Style/AndOr:
-  EnforcedStyle: conditionals
-
-Style/BlockDelimiters:
-  AutoCorrect: false
-  Exclude:
-    - 'spec/**/*'
-    - 'integration_test/**/*'
-
-Style/BracesAroundHashParameters:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/CollectionMethods:
-  PreferredMethods:
-    detect: 'detect'
-    find: 'detect'
-    inject: 'inject'
-    reduce: 'inject'
-
-Style/Documentation:
-  Enabled: false
-
-Style/DotPosition:
-  Enabled: true
-  EnforcedStyle: leading
-
-Style/EmptyElse:
-  EnforcedStyle: empty
-
-Style/EmptyMethod:
-  EnforcedStyle: expanded
-
-Style/Encoding:
-  Enabled: true
-
-Style/GuardClause:
-  MinBodyLength: 5
-
-Style/HashSyntax:
-  Exclude:
-    - 'Rakefile'
-
-Style/IfInsideElse:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Style/IndentArray:
-  EnforcedStyle: consistent
-
-Style/IndentHash:
-  EnforcedStyle: consistent
-
-Style/Lambda:
-  EnforcedStyle: literal
-
-Style/MethodCalledOnDoEndBlock:
-  Enabled: true
-
-Style/MixinGrouping:
-  Exclude:
-    - 'spec/**/*'
-
-Style/MultilineMethodCallIndentation:
-  EnforcedStyle: indented_relative_to_receiver
-
-Style/NumericLiterals:
-  MinDigits: 7
-  # Strict: true
-
-Style/NumericPredicate:
-  Enabled: false
-
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    default: ()
-    '%w': '()'
-    '%W': '()'
-    '%i': '()'
-    '%I': '()'
-    '%r': '{}'
-
-Style/PerlBackrefs:
-  AutoCorrect: false
-
-Style/PredicateName:
-  NamePrefixBlacklist:
-    - 'is_'
-    - 'have_'
-  NamePrefix:
-    - 'is_'
-    - 'have_'
-
-Style/PreferredHashMethods:
-  EnforcedStyle: verbose
-
-Style/RedundantReturn:
-  AllowMultipleReturnValues: true
-
-Style/RedundantSelf:
-  Enabled: false
-
-Style/SafeNavigation:
-  Enabled: false
-
-Style/Semicolon:
-  Exclude:
-    - "spec/**/*"
-
-Style/StringMethods:
-  Enabled: true
-
-Style/SymbolArray:
-  Enabled: false
-
-Style/TernaryParentheses:
-  EnforcedStyle: require_parentheses_when_complex
-
-Style/TrailingCommaInLiteral:
-  EnforcedStyleForMultiline: comma
-
-Style/WordArray:
-  Enabled: false
-
-Style/ZeroLengthPredicate:
-  Enabled: false
-
-Bundler/OrderedGems:
-  Enabled: false
