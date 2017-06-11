@@ -10,6 +10,7 @@ sudo: false
 before_install:
   - 'gem install bundler --no-document'
 script:
+  - 'bundle exec rubocop'
   - 'bundle exec rspec'
   - 'bundle exec rspec integration_test/'
 after_success:
