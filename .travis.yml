@@ -7,8 +7,6 @@ rvm:
 
 sudo: false
 
-before_install:
-  - 'gem install bundler --no-document'
 script:
   - 'bundle exec rubocop'
   - 'bundle exec rspec'
