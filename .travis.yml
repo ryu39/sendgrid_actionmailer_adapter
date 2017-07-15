@@ -4,18 +4,38 @@ rvm:
   - ruby-head
   - 2.4.1
   - 2.3.4
+gemfile:
+  - 'gemfiles/action_mailer_edge.gemfile'
+  - 'gemfiles/action_mailer_51.gemfile'
+  - 'gemfiles/action_mailer_50.gemfile'
+env:
+  - INTEGRATION_TEST=false REPORT_COVERAGE=false
+  - INTEGRATION_TEST=true REPORT_COVERAGE=true
 
 sudo: false
 
 script:
-  - 'bundle exec rubocop'
+  - 'bundle exec rubocop -c .rubocop.yml'
   - 'bundle exec rspec'
-  - 'bundle exec rspec integration_test/'
+  - 'if [ $INTEGRATION_TEST == "true" ]; then bundle exec rspec integration_test; fi'
 after_success:
-  - 'bundle exec codeclimate-test-reporter'
+  - 'if [ $REPORT_COVERAGE == "true" ]; then bundle exec codeclimate-test-reporter; fi'
 
 cache: bundler
 
 matrix:
+  exclude:
+    - env: INTEGRATION_TEST=true REPORT_COVERAGE=true
+    - rvm: 2.3.4
+      gemfile: gemfiles/action_mailer_edge.gemfile
+    - rvm: ruby-head
+      gemfile: gemfiles/action_mailer_edge.gemfile
+    - rvm: ruby-head
+      gemfile: gemfiles/action_mailer_50.gemfile
+  include:
+    - rvm: 2.4.1
+      gemfile: gemfiles/action_mailer_51.gemfile
+      env: INTEGRATION_TEST=true REPORT_COVERAGE=true
   allow_failures:
     - rvm: ruby-head
+    - gemfile: gemfiles/action_mailer_edge.gemfile
