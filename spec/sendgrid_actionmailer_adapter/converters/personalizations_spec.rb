@@ -81,20 +81,20 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Personalizations do
     let(:value) { [personalization_1, personalization_2] }
     let(:personalization_1) {
       ::SendGrid::Personalization.new.tap do |p|
-        p.to = ::SendGrid::Email.new(email: to_1)
-        p.cc = ::SendGrid::Email.new(email: cc_1)
-        p.cc = ::SendGrid::Email.new(email: cc_2_email, name: cc_2_name)
-        p.bcc = ::SendGrid::Email.new(email: bcc_1)
-        p.bcc = ::SendGrid::Email.new(email: bcc_2_email, name: bcc_2_name)
+        p.add_to(::SendGrid::Email.new(email: to_1))
+        p.add_cc(::SendGrid::Email.new(email: cc_1))
+        p.add_cc(::SendGrid::Email.new(email: cc_2_email, name: cc_2_name))
+        p.add_bcc(::SendGrid::Email.new(email: bcc_1))
+        p.add_bcc(::SendGrid::Email.new(email: bcc_2_email, name: bcc_2_name))
       end
     }
     let(:personalization_2) {
       ::SendGrid::Personalization.new.tap do |p|
-        p.to = ::SendGrid::Email.new(email: to_2_email, name: to_2_name)
-        p.cc = ::SendGrid::Email.new(email: cc_1)
-        p.cc = ::SendGrid::Email.new(email: cc_2_email, name: cc_2_name)
-        p.bcc = ::SendGrid::Email.new(email: bcc_1)
-        p.bcc = ::SendGrid::Email.new(email: bcc_2_email, name: bcc_2_name)
+        p.add_to(::SendGrid::Email.new(email: to_2_email, name: to_2_name))
+        p.add_cc(::SendGrid::Email.new(email: cc_1))
+        p.add_cc(::SendGrid::Email.new(email: cc_2_email, name: cc_2_name))
+        p.add_bcc(::SendGrid::Email.new(email: bcc_1))
+        p.add_bcc(::SendGrid::Email.new(email: bcc_2_email, name: bcc_2_name))
       end
     }
 
