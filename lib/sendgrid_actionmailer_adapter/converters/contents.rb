@@ -5,6 +5,9 @@ require 'sendgrid-ruby'
 module SendGridActionMailerAdapter
   module Converters
     class Contents
+      def validate(_mail)
+      end
+
       def convert(mail)
         ::SendGrid::Content.new(type: mail.mime_type, value: mail.body.to_s)
       end

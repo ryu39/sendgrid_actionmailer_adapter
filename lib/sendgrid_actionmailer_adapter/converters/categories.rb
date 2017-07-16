@@ -5,6 +5,9 @@ require 'sendgrid-ruby'
 module SendGridActionMailerAdapter
   module Converters
     class Categories
+      def validate(_mail)
+      end
+
       def convert(mail)
         categories_str = mail['categories']&.value
         return if categories_str.nil? || categories_str.empty?

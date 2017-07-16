@@ -39,42 +39,10 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
   let(:send_at) { Time.now.to_i }
 
   describe 'validation' do
-    it { expect { subject }.not_to raise_error }
+    let(:from) { nil }
 
-    shared_examples_for 'validation error' do
-      it 'raises SendGridActionMailerAdapter::ValidationError error' do
-        expect { subject }.to raise_error(SendGridActionMailerAdapter::ValidationError)
-      end
-    end
-
-    context 'when from is nil' do
-      let(:from) { nil }
-
-      it_behaves_like 'validation error'
-    end
-
-    context 'when from is empty' do
-      let(:from) { '' }
-
-      it_behaves_like 'validation error'
-    end
-
-    context 'when to is empty' do
-      let(:to) { [] }
-
-      it_behaves_like 'validation error'
-    end
-
-    context 'when subject is nil' do
-      let(:title) { nil }
-
-      it_behaves_like 'validation error'
-    end
-
-    context 'when subject is empty' do
-      let(:title) { '' }
-
-      it_behaves_like 'validation error'
+    it 'raises SendGridActionMailerAdapter::ValidationError error' do
+      expect { subject }.to raise_error(SendGridActionMailerAdapter::ValidationError)
     end
   end
 

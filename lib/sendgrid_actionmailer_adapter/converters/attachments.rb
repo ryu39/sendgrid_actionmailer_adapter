@@ -7,6 +7,9 @@ require 'sendgrid-ruby'
 module SendGridActionMailerAdapter
   module Converters
     class Attachments
+      def validate(_mail)
+      end
+
       def convert(mail)
         mail.attachments.map do |attachment|
           ::SendGrid::Attachment.new.tap do |sendgrid_attachment|

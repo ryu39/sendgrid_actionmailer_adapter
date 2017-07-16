@@ -22,6 +22,20 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Personalizations do
   let(:bcc_2_name) { 'bcc_2' }
   let(:bcc_2_email) { 'bcc_2@example.com' }
 
+  describe '#validate' do
+    subject { converter.validate(mail) }
+
+    let(:mail) { ::Mail.new(to: to_addrs, cc: cc_addrs, bcc: bcc_addrs) }
+
+    it { is_expected.to be_empty }
+
+    context 'when to_addrs is empty' do
+      let(:to_addrs) { [] }
+
+      it { is_expected.not_to be_empty }
+    end
+  end
+
   describe '#convert' do
     subject { converter.convert(mail) }
 

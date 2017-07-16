@@ -8,6 +8,26 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Subject do
   let(:converter) { SendGridActionMailerAdapter::Converters::Subject.new }
   let(:title) { 'title' }
 
+  describe '#validate' do
+    subject { converter.validate(mail) }
+
+    let(:mail) { ::Mail.new(subject: title) }
+
+    it { is_expected.to be_empty }
+
+    context 'when subject is nil' do
+      let(:title) { nil }
+
+      it { is_expected.not_to be_empty }
+    end
+
+    context 'when subject is empty string' do
+      let(:title) { '' }
+
+      it { is_expected.not_to be_empty }
+    end
+  end
+
   describe '#convert' do
     subject { converter.convert(mail) }
 

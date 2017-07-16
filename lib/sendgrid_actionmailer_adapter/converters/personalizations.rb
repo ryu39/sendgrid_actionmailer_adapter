@@ -5,6 +5,14 @@ require 'sendgrid-ruby'
 module SendGridActionMailerAdapter
   module Converters
     class Personalizations
+      def validate(mail)
+        error_messages = []
+        if mail.to_addrs.empty?
+          error_messages << "'to_addrs' must not be empty."
+        end
+        error_messages
+      end
+
       def convert(mail)
         # Separate emails per each To address.
         # Cc and Bcc addresses are shared with each emails.

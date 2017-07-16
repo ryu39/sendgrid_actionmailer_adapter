@@ -3,6 +3,14 @@
 module SendGridActionMailerAdapter
   module Converters
     class Subject
+      def validate(mail)
+        error_messages = []
+        if mail.subject.nil? || mail.subject.empty?
+          error_messages << "'subject' is required."
+        end
+        error_messages
+      end
+
       def convert(mail)
         mail.subject
       end

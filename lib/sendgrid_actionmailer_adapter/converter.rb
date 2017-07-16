@@ -13,12 +13,6 @@ require_relative 'converters/reply_to'
 
 module SendGridActionMailerAdapter
   class Converter
-    VALIDATORS = [
-      ->(mail) { "'from' is required." if mail.from_addrs.empty? },
-      ->(mail) { "'to_addrs' must not be empty." if mail.to_addrs.empty? },
-      ->(mail) { "'subject' is required." if mail.subject.nil? || mail.subject.empty? },
-    ].freeze
-
     CONVERTERS = [
       ::SendGridActionMailerAdapter::Converters::From.new,
       ::SendGridActionMailerAdapter::Converters::Subject.new,
@@ -44,9 +38,10 @@ module SendGridActionMailerAdapter
       private
 
       def validate!(mail)
-        error_messages = VALIDATORS.map { |validator| validator.call(mail) }.compact
+        error_messages = CONVERTERS.flat_map { |converter| converter.validate(mail) }.compact
         unless error_messages.empty?
-          raise SendGridActionMailerAdapter::ValidationError, "Validation error, #{error_messages}"
+          raise ::SendGridActionMailerAdapter::ValidationError,
+                "Validation error, #{error_messages}"
         end
       end
 

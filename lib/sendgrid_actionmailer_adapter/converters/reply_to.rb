@@ -5,6 +5,9 @@ require 'sendgrid-ruby'
 module SendGridActionMailerAdapter
   module Converters
     class ReplyTo
+      def validate(_mail)
+      end
+
       def convert(mail)
         addr = mail[:reply_to]&.addrs&.first
         return if addr.nil?

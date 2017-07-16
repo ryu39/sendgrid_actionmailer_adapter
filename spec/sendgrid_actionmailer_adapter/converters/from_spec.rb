@@ -9,6 +9,20 @@ RSpec.describe SendGridActionMailerAdapter::Converters::From do
   let(:addr) { 'from@example.com' }
   let(:name) { 'From' }
 
+  describe '#validate' do
+    subject { converter.validate(mail) }
+
+    let(:mail) { ::Mail.new(from: addr) }
+
+    it { is_expected.to be_empty }
+
+    context 'when from is nil' do
+      let(:addr) { nil }
+
+      it { is_expected.not_to be_empty }
+    end
+  end
+
   describe '#convert' do
     subject { converter.convert(mail) }
 
