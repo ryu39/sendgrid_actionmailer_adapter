@@ -25,7 +25,7 @@ module SendGridActionMailerAdapter
 
       def assign_attributes(sendgrid_mail, value)
         Array(value).each do |attachment|
-          sendgrid_mail.attachments = attachment
+          sendgrid_mail.add_attachment(attachment)
         end
       end
     end

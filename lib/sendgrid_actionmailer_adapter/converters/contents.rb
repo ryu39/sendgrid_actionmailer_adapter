@@ -14,7 +14,7 @@ module SendGridActionMailerAdapter
 
       def assign_attributes(sendgrid_mail, value)
         Array(value).each do |content|
-          sendgrid_mail.contents = content
+          sendgrid_mail.add_content(content)
         end
       end
     end

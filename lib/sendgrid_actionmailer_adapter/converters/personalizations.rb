@@ -25,7 +25,7 @@ module SendGridActionMailerAdapter
 
       def assign_attributes(sendgrid_mail, value)
         Array(value).each do |personalization|
-          sendgrid_mail.personalizations = personalization
+          sendgrid_mail.add_personalization(personalization)
         end
       end
 
@@ -33,12 +33,12 @@ module SendGridActionMailerAdapter
 
       def to_personalization(to_addr, cc_addrs, bcc_addrs)
         ::SendGrid::Personalization.new.tap do |p|
-          p.to = ::SendGrid::Email.new(email: to_addr.address, name: to_addr.display_name)
+          p.add_to(::SendGrid::Email.new(email: to_addr.address, name: to_addr.display_name))
           Array(cc_addrs).each do |addr|
-            p.cc = ::SendGrid::Email.new(email: addr.address, name: addr.display_name)
+            p.add_cc(::SendGrid::Email.new(email: addr.address, name: addr.display_name))
           end
           Array(bcc_addrs).each do |addr|
-            p.bcc = ::SendGrid::Email.new(email: addr.address, name: addr.display_name)
+            p.add_bcc(::SendGrid::Email.new(email: addr.address, name: addr.display_name))
           end
         end
       end

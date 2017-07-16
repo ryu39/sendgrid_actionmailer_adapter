@@ -16,7 +16,7 @@ module SendGridActionMailerAdapter
 
       def assign_attributes(sendgrid_mail, value)
         Array(value).each do |category|
-          sendgrid_mail.categories = category
+          sendgrid_mail.add_category(category)
         end
       end
     end

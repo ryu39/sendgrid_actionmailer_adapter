@@ -11,7 +11,7 @@ A ActionMailer adapter using [SendGrid Web API v3](https://sendgrid.com/docs/API
 ## Requirements
 
 * Ruby >= 2.3.0
-* [sendgrid-ruby](https://github.com/sendgrid/sendgrid-ruby) >= 4.0
+* [sendgrid-ruby](https://github.com/sendgrid/sendgrid-ruby) >= 5.0
 
 
 ## Installation
