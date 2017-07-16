@@ -9,8 +9,8 @@ gemfile:
   - 'gemfiles/action_mailer_51.gemfile'
   - 'gemfiles/action_mailer_50.gemfile'
 env:
-  - INTEGRATION_TEST=false REPORT_COVERAGE=false
-  - INTEGRATION_TEST=true REPORT_COVERAGE=true
+  - INTEGRATION_TEST=false
+  - INTEGRATION_TEST=true
 
 sudo: false
 
@@ -19,13 +19,13 @@ script:
   - 'bundle exec rspec'
   - 'if [ $INTEGRATION_TEST == "true" ]; then bundle exec rspec integration_test; fi'
 after_success:
-  - 'if [ $REPORT_COVERAGE == "true" ]; then bundle exec codeclimate-test-reporter; fi'
+  - 'bundle exec codeclimate-test-reporter'
 
 cache: bundler
 
 matrix:
   exclude:
-    - env: INTEGRATION_TEST=true REPORT_COVERAGE=true
+    - env: INTEGRATION_TEST=true
     - rvm: 2.3.4
       gemfile: gemfiles/action_mailer_edge.gemfile
     - rvm: ruby-head
@@ -35,7 +35,7 @@ matrix:
   include:
     - rvm: 2.4.1
       gemfile: gemfiles/action_mailer_51.gemfile
-      env: INTEGRATION_TEST=true REPORT_COVERAGE=true
+      env: INTEGRATION_TEST=true
   allow_failures:
     - rvm: ruby-head
     - gemfile: gemfiles/action_mailer_edge.gemfile
