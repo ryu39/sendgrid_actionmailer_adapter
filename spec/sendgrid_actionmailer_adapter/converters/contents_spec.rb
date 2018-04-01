@@ -19,6 +19,20 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Contents do
     it { expect(subject.value).to eq(body) }
   end
 
+  context 'handling multipart mail' do
+    describe '#convert' do
+      subject { converter.convert(mail) }
+
+      let(:part) { ::Mail::Part.new(content_type: content_type, body: body) }
+      let(:content_type) { "#{type}; charset=UTF-8" }
+      let(:mail) do
+        ::Mail.new.tap { |m| 2.times { m.body << part } }
+      end
+
+      it { expect(subject).not_to be_empty }
+    end
+  end
+
   describe '#assign_attributes' do
     subject { converter.assign_attributes(sendgrid_mail, value) }
 
