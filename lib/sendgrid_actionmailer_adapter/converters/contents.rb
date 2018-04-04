@@ -9,13 +9,8 @@ module SendGridActionMailerAdapter
       end
 
       def convert(mail)
-        unless mail.body.multipart?
-          return ::SendGrid::Content.new(type: mail.mime_type, value: mail.body.to_s)
-        end
-
-        mail.body.parts.map do |part|
-          ::SendGrid::Content.new(type: part.mime_type, value: part.body.to_s)
-        end
+        main_part = mail.body.parts.detect(&:text?) || mail
+        ::SendGrid::Content.new(type: main_part.mime_type, value: main_part.body.to_s)
       end
 
       def assign_attributes(sendgrid_mail, value)
