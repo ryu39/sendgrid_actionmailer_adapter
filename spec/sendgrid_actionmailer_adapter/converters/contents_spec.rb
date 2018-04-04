@@ -8,6 +8,7 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Contents do
   let(:converter) { SendGridActionMailerAdapter::Converters::Contents.new }
   let(:type) { 'text/plain' }
   let(:body) { 'Body' }
+  let(:attachment_file_path) { File.expand_path('../../../../test_data/Lenna.jpg', __FILE__) }
 
   describe '#convert' do
     subject { converter.convert(mail) }
@@ -17,19 +18,16 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Contents do
 
     it { expect(subject.type).to eq(type) }
     it { expect(subject.value).to eq(body) }
-  end
 
-  context 'handling multipart mail' do
-    describe '#convert' do
-      subject { converter.convert(mail) }
-
-      let(:part) { ::Mail::Part.new(content_type: content_type, body: body) }
-      let(:content_type) { "#{type}; charset=UTF-8" }
-      let(:mail) do
-        ::Mail.new.tap { |m| 2.times { m.body << part } }
+    context 'when mail is multipart' do
+      before do
+        mail.add_file(attachment_file_path)
       end
 
-      it { expect(subject).not_to be_empty }
+      it 'returns content which of content type is text' do
+        expect(subject.type).to eq(type)
+        expect(subject.value).to eq(body)
+      end
     end
   end
 
