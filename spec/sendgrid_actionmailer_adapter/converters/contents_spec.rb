@@ -6,27 +6,43 @@ require 'sendgrid-ruby'
 
 RSpec.describe SendGridActionMailerAdapter::Converters::Contents do
   let(:converter) { SendGridActionMailerAdapter::Converters::Contents.new }
-  let(:type) { 'text/plain' }
-  let(:body) { 'Body' }
   let(:attachment_file_path) { File.expand_path('../../../../test_data/Lenna.jpg', __FILE__) }
 
   describe '#convert' do
     subject { converter.convert(mail) }
 
-    let(:mail) { ::Mail.new(content_type: content_type, body: body) }
-    let(:content_type) { "#{type}; charset=UTF-8" }
+    let(:mail) { ::Mail.new(content_type: 'text/plain; charset=UTF-8', body: 'Body') }
 
-    it { expect(subject.type).to eq(type) }
-    it { expect(subject.value).to eq(body) }
+    it 'returns arrays which contains text/plain mail body' do
+      expect(subject.first.type).to eq('text/plain')
+      expect(subject.first.value).to eq('Body')
+    end
 
-    context 'when mail is multipart' do
+    context 'when mail is multipart(text/plain and text/html)' do
+      before do
+        mail.html_part = '<html></html>'
+      end
+
+      it 'returns array which contains text/plain and text/html content' do
+        expect(subject.length).to eq(2)
+
+        expect(subject.first.type).to eq('text/plain')
+        expect(subject.first.value).to eq('Body')
+
+        expect(subject.last.type).to eq('text/html')
+        expect(subject.last.value).to eq('<html></html>')
+      end
+    end
+
+    context 'when mail is multipart(not text file)' do
       before do
         mail.add_file(attachment_file_path)
       end
 
-      it 'returns content which of content type is text' do
-        expect(subject.type).to eq(type)
-        expect(subject.value).to eq(body)
+      it 'returns array which contains only text content' do
+        expect(subject.length).to eq(1)
+        expect(subject.first.type).to eq('text/plain')
+        expect(subject.first.value).to eq('Body')
       end
     end
   end
@@ -35,14 +51,14 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Contents do
     subject { converter.assign_attributes(sendgrid_mail, value) }
 
     let(:sendgrid_mail) { ::SendGrid::Mail.new }
-    let(:value) { ::SendGrid::Content.new(type: type, value: body) }
+    let(:value) { [::SendGrid::Content.new(type: 'text/plain', value: 'Body')] }
 
     it 'assigns contents to sendgrid_mail' do
       subject
       expect(sendgrid_mail.contents.length).to eq(1)
       content = sendgrid_mail.contents.first
-      expect(content['type']).to eq(type)
-      expect(content['value']).to eq(body)
+      expect(content['type']).to eq('text/plain')
+      expect(content['value']).to eq('Body')
     end
   end
 end

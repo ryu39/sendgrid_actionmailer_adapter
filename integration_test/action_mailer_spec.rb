@@ -79,7 +79,32 @@ RSpec.describe 'Integration test, send mails using ActionMailer' do
     let(:test_file_path) { File.expand_path('../../test_data/Lenna.jpg', __FILE__) }
 
     before do
-      mail.attachments['Lenna.jpg'] = IO.read(test_file_path)
+      mail.add_file(test_file_path)
+    end
+
+    it_behaves_like 'success mail API request'
+  end
+
+  context 'with html mail' do
+    let(:params) do
+      { subject: 'test mail with text and html' }
+    end
+    let(:html_mail_body) do
+      <<~HTML_MAIL
+        <html>
+          <head>
+            <title>title</title>
+          </head>
+          <body>
+            <h1>Test</h1>
+            <p>This is a test mail.</p>
+          </body>
+        </html>
+      HTML_MAIL
+    end
+
+    before do
+      mail.html_part = html_mail_body
     end
 
     it_behaves_like 'success mail API request'
