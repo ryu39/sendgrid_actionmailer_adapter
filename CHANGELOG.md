@@ -1,8 +1,8 @@
 # Change logs
 
-## v0.2.1
+## v0.2.2
 
-* Adds support for multipart email. (#9, #10)
+* Adds support for multipart email. (#9, #10, #11)
 
 ## v0.2.0
 
