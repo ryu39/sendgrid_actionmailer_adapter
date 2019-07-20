@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'logger'
 require 'sendgrid/client'
 require_relative 'configuration'
 require_relative 'converter'
@@ -22,6 +23,7 @@ module SendGridActionMailerAdapter
     # @options settings [Integer, Float] :retry_wait_sec Wait seconds for next retry, Default is 1.
     def initialize(settings)
       @settings = ::SendGridActionMailerAdapter::Configuration.settings.merge(settings)
+      @logger = @settings[:logger] || ::Logger.new(nil)
     end
 
     # Deliver a mail via SendGrid Web API.
@@ -39,7 +41,9 @@ module SendGridActionMailerAdapter
       end
 
       with_retry(@settings[:retry]) do
+        @logger.info("Calling sendMail API, #{sendgrid_mail.inspect}")
         response = sendgrid_client.mail._('send').post(request_body: sendgrid_mail.to_json)
+        @logger.info("End calling sendMail API, status_code: #{response.status_code}")
         handle_response!(response)
       end
     end
@@ -54,8 +58,10 @@ module SendGridActionMailerAdapter
     def remove_to_addrs_from_bounces(sendgrid_mail)
       sendgrid_mail.personalizations.each do |personalization|
         personalization['to'].each do |to|
+          @logger.info("Calling deleteBounce API, #{to}")
           # success => 204, not_found => 404
           sendgrid_client.suppression.bounces._(to['email']).delete
+          @logger.info('End calling deleteBounce API')
         end
       end
     end
@@ -65,13 +71,18 @@ module SendGridActionMailerAdapter
       begin
         tryable_count -= 1
         yield
-      rescue ::SendGridActionMailerAdapter::ApiClientError => _e
+      rescue ::SendGridActionMailerAdapter::ApiClientError => e
+        @logger.error(e)
         raise
-      rescue StandardError => _e
+      rescue StandardError => e
         if tryable_count > 0
+          @logger.warn("Retry mail sending, tryable_count: #{tryable_count}")
+          @logger.warn(e)
           sleep(wait_seconds)
           retry
         end
+        @logger.error('Give up retrying')
+        @logger.error(e)
         raise
       end
     end
