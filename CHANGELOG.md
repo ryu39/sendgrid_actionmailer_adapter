@@ -1,5 +1,10 @@
 # Change logs
 
+## v0.3.0
+
+* Add new mail option `:remove_from_bounces`. (#13)
+* Add new config option `:logger`. (#13) 
+
 ## v0.2.2
 
 * Adds support for multipart email. (#9, #10, #11)
