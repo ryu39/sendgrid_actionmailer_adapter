@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'logger'
 
 RSpec.describe SendGridActionMailerAdapter::Configuration do
   let(:api_key) { 'api_key' }
@@ -10,6 +11,7 @@ RSpec.describe SendGridActionMailerAdapter::Configuration do
   let(:retry_max_count) { 1 }
   let(:retry_wait_seconds) { 0.5 }
   let(:return_response) { true }
+  let(:logger) { ::Logger.new(nil) }
 
   before do
     SendGridActionMailerAdapter.configure do |config|
@@ -20,6 +22,7 @@ RSpec.describe SendGridActionMailerAdapter::Configuration do
       config.retry_max_count = retry_max_count
       config.retry_wait_seconds = retry_wait_seconds
       config.return_response = return_response
+      config.logger = logger
     end
   end
 
@@ -43,6 +46,7 @@ RSpec.describe SendGridActionMailerAdapter::Configuration do
           wait_seconds: retry_wait_seconds,
         },
         return_response: return_response,
+        logger: logger,
       }
     end
 

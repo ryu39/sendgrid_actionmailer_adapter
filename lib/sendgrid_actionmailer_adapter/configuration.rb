@@ -7,7 +7,7 @@ module SendGridActionMailerAdapter
 
     class << self
       attr_accessor :api_key, :host, :request_headers, :version, :retry_max_count,
-                    :retry_wait_seconds, :return_response
+                    :retry_wait_seconds, :return_response, :logger
 
       # Set your configuration with block.
       def configure
@@ -30,6 +30,7 @@ module SendGridActionMailerAdapter
             wait_seconds: retry_wait_seconds || DEFAULT_RETRY_WAIT_SECONDS,
           },
           return_response: return_response,
+          logger: logger,
         }.freeze
       end
 
@@ -42,6 +43,7 @@ module SendGridActionMailerAdapter
         self.retry_max_count = nil
         self.retry_wait_seconds = nil
         self.return_response = nil
+        self.logger = nil
         @settings = nil
       end
     end
