@@ -18,7 +18,7 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Categories do
     end
 
     it 'returns array of ::SendGrid::Category' do
-      is_expected.to all(be_a(::SendGrid::Category))
+      expect(subject).to all(be_a(::SendGrid::Category))
       expect(subject.map(&:category)).to eq(categories)
     end
 

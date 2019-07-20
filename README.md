@@ -62,6 +62,9 @@ SendGridActionMailerAdapter.configure do |config|
   # optional(Retry)
   config.retry_max_count = 3
   config.retry_wait_seconds = 3.0
+
+  # optional(Others)
+  config.logger = ::Logger.new(STDOUT)
 end
 ```
 
@@ -113,6 +116,24 @@ class TestMailer < ApplicationMailer
 
   def test_mail
     mail(to: 'test@example.com', subject: 'Test mail', send_at: 1.hour.since)
+  end
+end
+```
+
+#### remove_from_bounces
+
+If you specified `true` to `remove_from_bounces` option, 
+[Delete a bounce](https://sendgrid.kke.co.jp/docs/API_Reference/Web_API_v3/bounces.html#Delete-a-bounce-DELETE)
+API is called for eah :to addresses.
+This option is useful for resending emails to mail addresses in bounce list.
+
+```ruby
+class TestMailer < ApplicationMailer
+  default from: 'from@example.com',
+          reply_to: 'no-reply@example.com'
+
+  def test_mail
+    mail(to: 'test@example.com', subject: 'Test mail', remove_from_bounces: true)
   end
 end
 ```

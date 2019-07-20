@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'sendgrid_actionmailer_adapter'
 
 require 'action_mailer'
@@ -76,7 +76,7 @@ RSpec.describe 'Integration test, send mails using ActionMailer' do
     let(:params) do
       { subject: 'test mail with attachments' }
     end
-    let(:test_file_path) { File.expand_path('../../test_data/Lenna.jpg', __FILE__) }
+    let(:test_file_path) { File.expand_path('../test_data/Lenna.jpg', __dir__) }
 
     before do
       mail.add_file(test_file_path)
@@ -131,4 +131,16 @@ RSpec.describe 'Integration test, send mails using ActionMailer' do
 
     it_behaves_like 'success mail API request'
   end
+
+  context 'with remove_from_bounces' do
+    let(:params) do
+      {
+        subject: 'test mail with remove_from_bounces',
+        remove_from_bounces: true,
+      }
+    end
+
+    it_behaves_like 'success mail API request'
+  end
 end
+# rubocop:enable Metrics/BlockLength

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'logger'
 require 'sendgrid/client'
 require_relative 'configuration'
 require_relative 'converter'
@@ -22,6 +23,7 @@ module SendGridActionMailerAdapter
     # @options settings [Integer, Float] :retry_wait_sec Wait seconds for next retry, Default is 1.
     def initialize(settings)
       @settings = ::SendGridActionMailerAdapter::Configuration.settings.merge(settings)
+      @logger = @settings[:logger] || ::Logger.new(nil)
     end
 
     # Deliver a mail via SendGrid Web API.
@@ -33,29 +35,54 @@ module SendGridActionMailerAdapter
     # @raise [SendGridActionMailerAdapter::ApiError] when SendGrid Web API returns error response.
     def deliver!(mail)
       sendgrid_mail = ::SendGridActionMailerAdapter::Converter.to_sendgrid_mail(mail)
-      body = sendgrid_mail.to_json
-      client = ::SendGrid::API.new(@settings[:sendgrid]).client.mail._('send')
+
+      if mail[:remove_from_bounces]
+        remove_to_addrs_from_bounces(sendgrid_mail)
+      end
 
       with_retry(@settings[:retry]) do
-        response = client.post(request_body: body)
+        @logger.info("Calling sendMail API, #{sendgrid_mail.inspect}")
+        response = sendgrid_client.mail._('send').post(request_body: sendgrid_mail.to_json)
+        @logger.info("End calling sendMail API, status_code: #{response.status_code}")
         handle_response!(response)
       end
     end
 
     private
 
+    def sendgrid_client
+      @sendgrid_client ||= ::SendGrid::API.new(@settings[:sendgrid]).client
+    end
+
+    # @param [::SendGrid::Mail]
+    def remove_to_addrs_from_bounces(sendgrid_mail)
+      sendgrid_mail.personalizations.each do |personalization|
+        personalization['to'].each do |to|
+          @logger.info("Calling deleteBounce API, #{to}")
+          # success => 204, not_found => 404
+          sendgrid_client.suppression.bounces._(to['email']).delete
+          @logger.info('End calling deleteBounce API')
+        end
+      end
+    end
+
     def with_retry(max_count:, wait_seconds:)
       tryable_count = max_count + 1
       begin
         tryable_count -= 1
         yield
-      rescue ::SendGridActionMailerAdapter::ApiClientError => _e
+      rescue ::SendGridActionMailerAdapter::ApiClientError => e
+        @logger.error(e)
         raise
-      rescue => _e
+      rescue StandardError => e
         if tryable_count > 0
+          @logger.warn("Retry mail sending, tryable_count: #{tryable_count}")
+          @logger.warn(e)
           sleep(wait_seconds)
           retry
         end
+        @logger.error('Give up retrying')
+        @logger.error(e)
         raise
       end
     end

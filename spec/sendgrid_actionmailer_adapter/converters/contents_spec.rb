@@ -6,7 +6,7 @@ require 'sendgrid-ruby'
 
 RSpec.describe SendGridActionMailerAdapter::Converters::Contents do
   let(:converter) { SendGridActionMailerAdapter::Converters::Contents.new }
-  let(:attachment_file_path) { File.expand_path('../../../../test_data/Lenna.jpg', __FILE__) }
+  let(:attachment_file_path) { File.expand_path('../../../test_data/Lenna.jpg', __dir__) }
 
   describe '#convert' do
     subject { converter.convert(mail) }
