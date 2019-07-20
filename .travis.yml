@@ -2,8 +2,8 @@ language: ruby
 
 rvm:
   - ruby-head
-  - 2.4.6
-  - 2.3.8
+  - 2.4
+  - 2.3
 gemfile:
   - 'gemfiles/action_mailer_edge.gemfile'
   - 'gemfiles/action_mailer_52.gemfile'
@@ -26,16 +26,16 @@ cache: bundler
 matrix:
   exclude:
     - env: INTEGRATION_TEST=true
-    - rvm: 2.3.8
+    - rvm: 2.3
       gemfile: gemfiles/action_mailer_51.gemfile
-    - rvm: 2.3.8
+    - rvm: 2.3
       gemfile: gemfiles/action_mailer_edge.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/action_mailer_51.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/action_mailer_edge.gemfile
   include:
-    - rvm: 2.4.6
+    - rvm: 2.4
       gemfile: gemfiles/action_mailer_52.gemfile
       env: INTEGRATION_TEST=true
   allow_failures:
