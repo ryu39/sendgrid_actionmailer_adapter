@@ -67,7 +67,7 @@ module SendGridActionMailerAdapter
         yield
       rescue ::SendGridActionMailerAdapter::ApiClientError => _e
         raise
-      rescue => _e
+      rescue StandardError => _e
         if tryable_count > 0
           sleep(wait_seconds)
           retry

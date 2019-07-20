@@ -11,6 +11,7 @@ module SendGridActionMailerAdapter
       def convert(mail)
         addr = mail[:reply_to]&.addrs&.first
         return if addr.nil?
+
         ::SendGrid::Email.new(email: addr.address, name: addr.display_name)
       end
 

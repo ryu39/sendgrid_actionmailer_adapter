@@ -21,7 +21,7 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Attachments do
     end
 
     it 'returns array of ::SendGrid::Attachment' do
-      is_expected.to all(be_a(::SendGrid::Attachment))
+      expect(subject).to all(be_a(::SendGrid::Attachment))
       attachment = subject.first
       expect(attachment.type).to eq('image/jpeg')
       expect(attachment.content_id).to eq(mail.attachments.first.cid)

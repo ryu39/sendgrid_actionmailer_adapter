@@ -42,7 +42,7 @@ RSpec.describe SendGridActionMailerAdapter::Converters::Personalizations do
     let(:mail) { ::Mail.new(to: to_addrs, cc: cc_addrs, bcc: bcc_addrs) }
 
     it 'returns array of ::SendGrid::Personalization' do
-      is_expected.to all(be_a(::SendGrid::Personalization))
+      expect(subject).to all(be_a(::SendGrid::Personalization))
     end
 
     it 'converts each to_addrs to ::SendGrid::Personalization' do

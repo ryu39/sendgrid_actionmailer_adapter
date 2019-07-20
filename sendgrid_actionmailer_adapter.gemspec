@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sendgrid_actionmailer_adapter/version'
 
@@ -24,11 +24,11 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'sendgrid-ruby', '~> 5.0'
 
-  spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'ryu39cop', '~> 0.49.1.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'webmock'
-  spec.add_development_dependency 'mail'
   spec.add_development_dependency 'actionmailer'
+  spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'mail'
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'ryu39cop'
+  spec.add_development_dependency 'webmock'
 end

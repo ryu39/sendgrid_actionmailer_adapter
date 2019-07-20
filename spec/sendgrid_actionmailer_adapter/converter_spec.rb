@@ -48,7 +48,7 @@ RSpec.describe SendGridActionMailerAdapter::Converter do
 
   describe 'conversion' do
     it 'converts Mail::Message to SendGrid::Mail' do
-      is_expected.to be_a(SendGrid::Mail)
+      expect(subject).to be_a(SendGrid::Mail)
     end
 
     it 'sets from to SendGrid::Mail' do

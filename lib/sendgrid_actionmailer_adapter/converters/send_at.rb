@@ -11,6 +11,7 @@ module SendGridActionMailerAdapter
       def convert(mail)
         send_at_str = mail['send_at']&.value
         return if send_at_str.nil? || send_at_str.empty?
+
         send_at_str.to_i
       end
 

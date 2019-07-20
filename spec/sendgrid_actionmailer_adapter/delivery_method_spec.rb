@@ -52,13 +52,12 @@ RSpec.describe SendGridActionMailerAdapter::DeliveryMethod do
                              'https://api.sendgrid.com/v3/suppression/bounces/to_1@example.com')
         stub2 = stub_request(:delete,
                              'https://api.sendgrid.com/v3/suppression/bounces/to_2@example.com')
-        stub3 = stub_request(:post, 'https://api.sendgrid.com/v3/mail/send').with(body: request_body)
+        stub3 = stub_request(:post, 'https://api.sendgrid.com/v3/mail/send')
+                  .with(body: request_body)
 
         expect { subject }.not_to raise_error
 
-        [stub1, stub2, stub3].each do |stub|
-          expect(stub).to have_been_requested
-        end
+        expect([stub1, stub2, stub3]).to all(have_been_requested)
       end
     end
 

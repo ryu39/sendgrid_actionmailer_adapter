@@ -11,6 +11,7 @@ module SendGridActionMailerAdapter
       def convert(mail)
         categories_str = mail['categories']&.value
         return if categories_str.nil? || categories_str.empty?
+
         categories_str.split(', ').map { |c| ::SendGrid::Category.new(name: c) }
       end
 
