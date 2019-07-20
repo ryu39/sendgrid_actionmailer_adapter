@@ -33,16 +33,18 @@ module SendGridActionMailerAdapter
     # @raise [SendGridActionMailerAdapter::ApiError] when SendGrid Web API returns error response.
     def deliver!(mail)
       sendgrid_mail = ::SendGridActionMailerAdapter::Converter.to_sendgrid_mail(mail)
-      body = sendgrid_mail.to_json
-      client = ::SendGrid::API.new(@settings[:sendgrid]).client.mail._('send')
 
       with_retry(@settings[:retry]) do
-        response = client.post(request_body: body)
+        response = sendgrid_client.mail._('send').post(request_body: sendgrid_mail.to_json)
         handle_response!(response)
       end
     end
 
     private
+
+    def sendgrid_client
+      @sendgrid_client ||= ::SendGrid::API.new(@settings[:sendgrid]).client
+    end
 
     def with_retry(max_count:, wait_seconds:)
       tryable_count = max_count + 1
