@@ -62,6 +62,9 @@ SendGridActionMailerAdapter.configure do |config|
   # optional(Retry)
   config.retry_max_count = 3
   config.retry_wait_seconds = 3.0
+
+  # optional(Others)
+  config.logger = ::Logger.new(STDOUT)
 end
 ```
 
