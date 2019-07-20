@@ -131,4 +131,15 @@ RSpec.describe 'Integration test, send mails using ActionMailer' do
 
     it_behaves_like 'success mail API request'
   end
+
+  context 'with remove_from_bounces' do
+    let(:params) do
+      {
+        subject: 'test mail with remove_from_bounces',
+        remove_from_bounces: true,
+      }
+    end
+
+    it_behaves_like 'success mail API request'
+  end
 end

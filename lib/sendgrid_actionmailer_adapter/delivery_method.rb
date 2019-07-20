@@ -34,6 +34,10 @@ module SendGridActionMailerAdapter
     def deliver!(mail)
       sendgrid_mail = ::SendGridActionMailerAdapter::Converter.to_sendgrid_mail(mail)
 
+      if mail[:remove_from_bounces]
+        remove_to_addrs_from_bounces(sendgrid_mail)
+      end
+
       with_retry(@settings[:retry]) do
         response = sendgrid_client.mail._('send').post(request_body: sendgrid_mail.to_json)
         handle_response!(response)
@@ -44,6 +48,16 @@ module SendGridActionMailerAdapter
 
     def sendgrid_client
       @sendgrid_client ||= ::SendGrid::API.new(@settings[:sendgrid]).client
+    end
+
+    # @param [::SendGrid::Mail]
+    def remove_to_addrs_from_bounces(sendgrid_mail)
+      sendgrid_mail.personalizations.each do |personalization|
+        personalization['to'].each do |to|
+          # success => 204, not_found => 404
+          sendgrid_client.suppression.bounces._(to['email']).delete
+        end
+      end
     end
 
     def with_retry(max_count:, wait_seconds:)

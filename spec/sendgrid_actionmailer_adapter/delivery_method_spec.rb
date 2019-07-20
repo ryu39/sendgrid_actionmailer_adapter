@@ -42,6 +42,26 @@ RSpec.describe SendGridActionMailerAdapter::DeliveryMethod do
       expect(stub).to have_been_requested
     end
 
+    context 'with :remove_from_bounces option' do
+      before do
+        mail[:remove_from_bounces] = true
+      end
+
+      it 'calls removeBounces API for each emails and sends mail' do
+        stub1 = stub_request(:delete,
+                             'https://api.sendgrid.com/v3/suppression/bounces/to_1@example.com')
+        stub2 = stub_request(:delete,
+                             'https://api.sendgrid.com/v3/suppression/bounces/to_2@example.com')
+        stub3 = stub_request(:post, 'https://api.sendgrid.com/v3/mail/send').with(body: request_body)
+
+        expect { subject }.not_to raise_error
+
+        [stub1, stub2, stub3].each do |stub|
+          expect(stub).to have_been_requested
+        end
+      end
+    end
+
     shared_examples_for 'retryable' do
       let(:settings) do
         {
