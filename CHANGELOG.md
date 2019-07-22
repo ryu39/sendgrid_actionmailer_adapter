@@ -1,5 +1,8 @@
 # Change logs
 
+## v0.3.1
+* Reduce logging info. (#14)
+
 ## v0.3.0
 
 * Add new mail option `:remove_from_bounces`. (#13)
