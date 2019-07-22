@@ -127,6 +127,8 @@ If you specified `true` to `remove_from_bounces` option,
 API is called for eah :to addresses.
 This option is useful for resending emails to mail addresses in bounce list.
 
+** If you want to use this option, please add `suppressions wirte` permission to your API key. **
+
 ```ruby
 class TestMailer < ApplicationMailer
   default from: 'from@example.com',
