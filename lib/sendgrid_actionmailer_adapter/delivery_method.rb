@@ -41,7 +41,7 @@ module SendGridActionMailerAdapter
       end
 
       with_retry(@settings[:retry]) do
-        @logger.info("Calling sendMail API, #{sendgrid_mail.inspect}")
+        @logger.info("Calling sendMail API, #{extract_log_info(sendgrid_mail)}")
         response = sendgrid_client.mail._('send').post(request_body: sendgrid_mail.to_json)
         @logger.info("End calling sendMail API, status_code: #{response.status_code}")
         handle_response!(response)
@@ -85,6 +85,13 @@ module SendGridActionMailerAdapter
         @logger.error(e)
         raise
       end
+    end
+
+    def extract_log_info(sendgrid_mail)
+      {
+        subject: sendgrid_mail.subject,
+        personalizations: sendgrid_mail.personalizations,
+      }
     end
 
     # @see https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html
