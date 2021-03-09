@@ -40,7 +40,7 @@ module SendGridActionMailerAdapter
         remove_to_addrs_from_bounces(sendgrid_mail)
       end
 
-      with_retry(@settings[:retry]) do
+      with_retry(**@settings[:retry]) do
         @logger.info("Calling sendMail API, #{extract_log_info(sendgrid_mail)}")
         response = sendgrid_client.mail._('send').post(request_body: sendgrid_mail.to_json)
         @logger.info("End calling sendMail API, status_code: #{response.status_code}")
@@ -51,7 +51,7 @@ module SendGridActionMailerAdapter
     private
 
     def sendgrid_client
-      @sendgrid_client ||= ::SendGrid::API.new(@settings[:sendgrid]).client
+      @sendgrid_client ||= ::SendGrid::API.new(**@settings[:sendgrid]).client
     end
 
     # @param [::SendGrid::Mail]

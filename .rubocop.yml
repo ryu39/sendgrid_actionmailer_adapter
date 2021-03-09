@@ -6,9 +6,18 @@ inherit_gem:
     - 'config/rspec.yml'
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
+  NewCops: enable
+  SuggestExtensions: false
   Exclude:
     - 'gemfiles/**/*'
+
+Layout/EmptyLineBetweenDefs:
+  Enabled: false
+
+Naming/VariableNumber:
+  Exclude:
+    - 'spec/**/*_spec.rb'
 
 RSpec/DescribeClass:
   Exclude:
@@ -19,3 +28,5 @@ RSpec/FilePath:
   Exclude:
     - 'spec/**/*_spec.rb'
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
