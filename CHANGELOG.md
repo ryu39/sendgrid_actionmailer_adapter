@@ -1,12 +1,16 @@
 # Change logs
 
+## v0.3.2
+
+* Fix for Ruby 3.0.
+
 ## v0.3.1
 * Reduce logging info. (#14)
 
 ## v0.3.0
 
 * Add new mail option `:remove_from_bounces`. (#13)
-* Add new config option `:logger`. (#13) 
+* Add new config option `:logger`. (#13)
 
 ## v0.2.2
 
